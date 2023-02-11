@@ -15,7 +15,7 @@ public class Main {
     private static final ReportGenerator reportGen = new ReportGenerator();
 
     private static final String KEYWORD_FILE_PATH_FLAG = "--keyword-file-path";
-    private static final String PDF_FOLDER_PATH_FLAG = "--pdf-file-path";
+    private static final String PDF_FOLDER_PATH_FLAG = "--pdf-folder-path";
     private static final String OUTPUT_FILE_PATH_FLAG = "--output-file-path";
 
     public static void main(String[] args) {
