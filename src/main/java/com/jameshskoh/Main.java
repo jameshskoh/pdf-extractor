@@ -1,6 +1,7 @@
 package com.jameshskoh;
 
 import com.jameshskoh.tools.KeywordExtractor;
+import com.jameshskoh.tools.ReportGenerator;
 import com.jameshskoh.tools.TextStatisticsGenerator;
 
 import java.io.File;
@@ -10,13 +11,14 @@ import java.util.Map;
 
 public class Main {
 
-    private static final TextStatisticsGenerator gen = new TextStatisticsGenerator();
+    private static final TextStatisticsGenerator textGen = new TextStatisticsGenerator();
+    private static final ReportGenerator reportGen = new ReportGenerator();
 
     public static void main(String[] args) {
 
-        String keywordFilePath = "keyword";
+        String keywordFilePath = "keywords/keywords.txt";
         String pdfFolderPath = "pdf";
-        String outputFilePath = "output";
+        String outputFilePath = "output/";
 
         printWelcomeMessage(keywordFilePath, pdfFolderPath, outputFilePath);
 
@@ -24,16 +26,18 @@ public class Main {
 
         File[] pdfs = getPdfHandles(pdfFolderPath);
 
-        Map<String, Map<String, Integer>> results = gen.generateStatistics(pdfs, keywords, true);
+        Map<String, Map<String, Integer>> results = textGen.generateStatistics(pdfs, keywords, true);
 
         printResults(results);
+
+        reportGen.generateXlsxReport(results, keywords, outputFilePath);
     }
 
     private static void printWelcomeMessage(String keywordFilePath, String pdfFolderPath, String outputFilePath) {
         System.out.println("Welcome!");
         System.out.println("Configurations: ");
         System.out.println("Keyword file path\t: " + keywordFilePath);
-        System.out.println("PDF folder path\t: " + pdfFolderPath);
+        System.out.println("PDF folder path\t\t: " + pdfFolderPath);
         System.out.println("Output file path\t: " + outputFilePath);
         System.out.println();
     }
@@ -47,13 +51,8 @@ public class Main {
             return keywords;
         } catch (IOException exc) {
             System.out.println("Unable to load keyword file.");
-            exc.printStackTrace();
-            System.out.println("Exiting program.");
-            System.exit(1);
+            throw new RuntimeException(exc);
         }
-
-        // unreachable code
-        throw new RuntimeException("Reached unreachable code!");
     }
 
     private static File[] getPdfHandles(String pdfFolderPath) {
