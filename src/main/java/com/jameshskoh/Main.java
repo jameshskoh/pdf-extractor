@@ -14,11 +14,39 @@ public class Main {
     private static final TextStatisticsGenerator textGen = new TextStatisticsGenerator();
     private static final ReportGenerator reportGen = new ReportGenerator();
 
-    public static void main(String[] args) {
+    private static final String KEYWORD_FILE_PATH_FLAG = "--keyword-file-path";
+    private static final String PDF_FOLDER_PATH_FLAG = "--pdf-file-path";
+    private static final String OUTPUT_FILE_PATH_FLAG = "--output-file-path";
 
-        String keywordFilePath = "keywords/keywords.txt";
-        String pdfFolderPath = "pdf";
-        String outputFilePath = "output/";
+    public static void main(String[] args) {
+        String keywordFilePath = "";
+        String pdfFolderPath = "";
+        String outputFilePath = "";
+
+        for (int i = 0; i < args.length; i++) {
+            System.out.println(args[i]);
+            if (KEYWORD_FILE_PATH_FLAG.equals(args[i])) {
+                i++;
+                keywordFilePath = args[i];
+                System.out.println(keywordFilePath);
+            } else if (PDF_FOLDER_PATH_FLAG.equals(args[i])) {
+                i++;
+                pdfFolderPath = args[i];
+                System.out.println(pdfFolderPath);
+            } else if (OUTPUT_FILE_PATH_FLAG.equals(args[i])) {
+                i++;
+                outputFilePath = args[i];
+                System.out.println(outputFilePath);
+            }
+        }
+
+        System.out.println();
+        System.out.println(keywordFilePath.equals(""));
+        System.out.println(pdfFolderPath.equals(""));
+        System.out.println(outputFilePath.equals(""));
+
+        if (keywordFilePath.equals("") || pdfFolderPath.equals("") || outputFilePath.equals(""))
+            throw new RuntimeException("Please pass in appropriate environment variables.");
 
         printWelcomeMessage(keywordFilePath, pdfFolderPath, outputFilePath);
 
@@ -28,7 +56,7 @@ public class Main {
 
         Map<String, Map<String, Integer>> results = textGen.generateStatistics(pdfs, keywords, true);
 
-        printResults(results);
+        // printResults(results);
 
         reportGen.generateXlsxReport(results, keywords, outputFilePath);
     }
