@@ -17,7 +17,8 @@ public class KeywordExtractor {
         String line = br.readLine();
 
         while (line != null) {
-            keywords.add(line.trim());
+            String result = line.trim();
+            if (result.length() != 0) keywords.add(result);
             line = br.readLine();
         }
 
