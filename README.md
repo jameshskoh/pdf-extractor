@@ -22,20 +22,25 @@ PDF extractor used to generate text statistics of PDF files. Based on Apache PDF
 
 5. Run the JAR with the following command:
    ```bash
-   java -jar pdf-extractor-{version}.jar --keyword-file-path {keywords_file} --pdf-folder-path {pdf_folder} --output-file-path {output_file}
+   java -jar pdf-extractor-{version}.jar --keyword-file-path {keywords_file} --pdf-folder-path {pdf_folder} --output-file-path {output_file} --parallel --case-sensitive
    ```
 
-   * Mandatory flags
+   * **Mandatory flags**
      * `--keyword-file-path`: path of `{keywords_file}`
      * `--pdf-folder-path`: path of `{pdf_folder}`
      * `--output-file-path`: path of `{output_file}`
+   * **Optional** (but **important**) **flags**
+     * `--parallel`: enables parallel processing
+       * if this flag is not set, the program uses sequential processing
+     * `--case-sensitive`: enables case-sensitive matching
+       * if this flag is not set, the program converts both the keywords and the extracted text to lower case before comparing
 
 
 
 #### An Example
 
 ```bash
-java -jar pdf-extractor-1.0.0-jar-with-dependencies.jar --keyword-file-path "keywords/keywords.txt" --pdf-folder-path "pdf/" --output-file-path "output/output.xlsx"
+java -jar pdf-extractor-2.0.0.jar --keyword-file-path "keywords/keywords.txt" --pdf-folder-path "pdf/" --output-file-path "output/output.xlsx"
 ```
 
 
