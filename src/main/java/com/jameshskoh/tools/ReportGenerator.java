@@ -37,7 +37,7 @@ public class ReportGenerator {
                 Map<String, Integer> result = results.get(pdfName);
 
                 // only report on PDFs that are successfully extracted
-                if (result != null) {
+                if (result.size() > 0) {
                     int colNum = 1;
                     for (String keyword : keywords) {
                         Cell cell = row.createCell(colNum++);
